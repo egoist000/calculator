@@ -1,0 +1,129 @@
+:root {
+    --color1: #F22294;
+    --color2: #EE05F2;
+    --color3: #BC04BF;
+    --color4: #151426;
+    --color5: #04D9C4;
+}
+
+html, body {
+    padding: 0;
+    margin: 0;
+    height: 100vh;
+    font-family: 'Roboto', sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--color4);
+}
+/* Main content */
+
+.content {
+    flex: 1 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+/* Calculator */
+
+.calculator-container {
+    padding: 2rem 2rem;
+    width: 18rem;
+    background-color: var(--color3);
+    border: 0.5rem solid var(--color2);
+    box-shadow: 0.1rem 0.1rem 1rem 0.1rem var(--color1);
+    border-radius: 1rem;
+}
+
+.calculator {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.5rem;
+    background-color: var(--color2);
+    padding: 1rem;
+    border-radius: 1rem;
+}
+
+/* Calculator screen */
+
+.screen {
+    background-color: var(--color4);
+    border-radius: 0.5rem;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    border: 0.2rem solid var(--color5);
+    box-shadow: 0.1rem 0.1rem 1rem 0.1rem var(--color2);
+}
+
+.currentOperation, .result {
+    color: var(--color5);
+    text-align: end;
+}
+
+.currentOperation {
+    height: 1.5rem;
+    padding-bottom: 0.5rem;
+}
+
+.result {
+    font-size: 2rem;
+}
+
+/* Calculator buttons */
+
+.btn {
+    text-align: center;
+    font-size: 1.4rem;
+    font-weight: 700;
+    padding: 0.8rem 0;
+    border-radius: 100%;
+    border: 0.1rem solid transparent;
+    cursor: pointer;
+    outline: inherit;
+    background-color: var(--color4);
+    color: var(--color5);
+    box-shadow: 0.1rem 0.1rem 1rem 0.1rem var(--color3);
+}
+
+.btn:hover {
+    transform: translateY(-0.2rem);
+    background-color: var(--color5);
+    color: var(--color4);
+    transition: 0.5s;
+}
+
+#equals {
+    grid-column: span 2;
+    border-radius: 2rem;
+}
+
+/* Footer */
+
+.footer {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    justify-content: center;
+}
+
+.footer h3 {
+    color: var(--color5);
+}
+
+/* GitHub animation */
+@keyframes githubAnimation {
+    0%   {transform: scale(1, 1);}
+    25%  {transform: scale(1.5, 0.8);}
+    50%  {transform: scale(0.5, 1.1);}
+    75%  {transform: scale(1, 0.8);}
+    100% {transform: scale(1, 1);}
+}
+
+.github-logo:hover {
+    position: relative;
+    animation-name: githubAnimation;
+    animation-duration: 2s;
+}
