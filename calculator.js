@@ -42,12 +42,9 @@ function clearLast() {
 }
 
 function percentOperation() {
-    if(currentNumber !== "0") {
+    if(currentNumber !== "0" && currentNumber !== "") {
         bottomScreenArea.textContent = bottomScreenArea.textContent.slice(0, -currentNumber.length);
-        currentNumber = (+currentNumber / 100).toString();
-        if(currentNumber.length > 8) {
-            currentNumber = parseFloat(currentNumber).toExponential(0);
-        }
+        currentNumber = parseFloat((+currentNumber / 100).toPrecision(12)).toString();
         bottomScreenArea.textContent += currentNumber;
     }
 }
