@@ -107,8 +107,7 @@ function operationClicked(e) {
     }
 }
 
-function numberClicked(e) {
-    let number = e.target.textContent;
+function numberClicked(number) {
     if(bottomScreenArea.textContent === "0" && number !== "0") {
         currentNumber = number;
         bottomScreenArea.textContent = currentNumber;
@@ -138,6 +137,43 @@ function dotClicked() {
     }
 }
 
+function keyToOperator(key) {
+    switch(key) {
+        case "/":
+            return "÷";
+        case "*":
+            return "x";
+        case "-":
+            return "-";
+        case "+":
+            return "+";
+    }
+}
+
+function keyPressed(e) {
+    if(e.key >= 0 && e.key <= 9) {
+        numberClicked(e.key);
+    }
+    else if(e.key === "Backspace") {
+        clearLast();
+    }
+    else if(e.key === "Delete") {
+        clearAll();
+    }
+    else if(e.key === ".") {
+        dotClicked();
+    }
+    else if(e.key === "%") {
+        percentOperation();
+    }
+    else if(e.key === "Enter") {
+        evalOperation();
+    }
+    else if(e.key === "/" || e.key === "*" || e.key === "+" || e.key === "-") {
+        if(shouldAddOperator) addOperator(keyToOperator(e.key));
+    }
+}
+
 dot.addEventListener("click", dotClicked);
 
 operations.forEach(op => {
@@ -145,5 +181,9 @@ operations.forEach(op => {
 });
 
 numbers.forEach(n => {
-    n.addEventListener("click", numberClicked);
+    n.addEventListener("click", () => {
+        numberClicked(n.textContent);
+    });
 });
+
+window.addEventListener("keydown", keyPressed);
