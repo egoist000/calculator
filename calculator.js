@@ -150,40 +150,71 @@ function keyToOperator(key) {
     }
 }
 
-function keyPressed(e) {
-    if(e.key >= 0 && e.key <= 9) {
-        numberClicked(e.key);
-    }
-    else if(e.key === "Backspace") {
-        clearLast();
-    }
-    else if(e.key === "Delete") {
-        clearAll();
-    }
-    else if(e.key === ".") {
-        dotClicked();
-    }
-    else if(e.key === "%") {
-        percentOperation();
-    }
-    else if(e.key === "Enter") {
-        evalOperation();
-    }
-    else if(e.key === "/" || e.key === "*" || e.key === "+" || e.key === "-") {
-        if(shouldAddOperator) addOperator(keyToOperator(e.key));
+function keyToOperatorId(key) {
+    switch(key) {
+        case "/":
+            return "divide";
+        case "*":
+            return "multiply";
+        case "-":
+            return "substract";
+        case "+":
+            return "add";
     }
 }
 
+function keyPressed(e) {
+    let button = null;
+    if(e.key >= 0 && e.key <= 9) {
+        button = document.getElementById(`${e.key}`);
+        numberClicked(e.key);
+    }
+    else if(e.key === ".") {
+        button = dot;
+        dotClicked();
+    }
+    else {    
+        if(e.key === "Backspace") {
+            button = document.getElementById("clear-last");
+            clearLast();
+        }
+        else if(e.key === "Delete") {
+            button = document.getElementById("clear-all");
+            clearAll();
+        }
+        else if(e.key === "%") {
+            button = document.getElementById("percent")
+            percentOperation();
+        }
+        else if(e.key === "Enter") {
+            button = document.getElementById("equals")
+            evalOperation();
+        }
+        else if(e.key === "/" || e.key === "*" || e.key === "+" || e.key === "-") {
+            button = document.getElementById(keyToOperatorId(e.key));
+            if(shouldAddOperator) addOperator(keyToOperator(e.key));
+        }
+    }
+    if(button !== null) button.classList.add("pressed")
+}
+
+function removeTransition(e) {
+    e.target.classList.remove("pressed");
+}
+
 dot.addEventListener("click", dotClicked);
+dot.addEventListener("transitionend", removeTransition);
 
 operations.forEach(op => {
     op.addEventListener("click", operationClicked);
+    op.addEventListener("transitionend", removeTransition);
 });
 
 numbers.forEach(n => {
     n.addEventListener("click", () => {
         numberClicked(n.textContent);
     });
+    n.addEventListener("transitionend", removeTransition);
 });
 
 window.addEventListener("keydown", keyPressed);

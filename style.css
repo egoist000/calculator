@@ -86,7 +86,7 @@ body {
 
 /* Calculator buttons */
 
-.btn, .operation, #dot {
+.btn, .operation {
     text-align: center;
     font-size: 1.4rem;
     font-weight: 700;
@@ -110,6 +110,13 @@ body {
 #equals {
     grid-column: span 2;
     border-radius: 2rem;
+}
+
+.pressed {
+    transform: scale(1.1, 1.1);
+    background-color: var(--color5);
+    color: var(--color4);
+    transition: 0.115s;
 }
 
 /* Footer */
