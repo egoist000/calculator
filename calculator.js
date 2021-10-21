@@ -3,9 +3,30 @@ const dot = document.getElementById("dot");
 const operations = document.querySelectorAll(".operation");
 const topScreenArea = document.querySelector(".top span");
 const bottomScreenArea = document.querySelector(".bottom span"); 
+const historyTxt = document.querySelector(".txt");
 
 let shouldAddOperator = true;
 let currentNumber = "0";
+
+let operationHistory = [];
+
+function setOperation(n1, op, n2, res) {
+    let operation = {
+        number1: n1,
+        operator: op,
+        number2: n2,
+        result: res
+    };
+    operationHistory.push(operation);
+}
+
+function appendOperationInHistory() {
+    let span = document.createElement("span");
+    let currentOperation = operationHistory[operationHistory.length - 1];
+    span.textContent = 
+        `${currentOperation.number1} ${currentOperation.operator} ${currentOperation.number2} = ${currentOperation.result}`;
+    historyTxt.appendChild(span);
+}
 
 function roundNumber(num) {
     return num.toExponential(8);
@@ -17,6 +38,8 @@ function clearAll() {
         currentNumber = "0";
         bottomScreenArea.textContent = "0";
         topScreenArea.textContent = "";
+        historyTxt.innerHTML = "";
+        operationHistory.splice(0, operationHistory.length);
     }
 }
 
@@ -57,7 +80,10 @@ function evalOperation() {
         if(res.length >= 12) {
             res = roundNumber(parseFloat(res));
         }
-        topScreenArea.textContent = `${n1} ${op} ${n2} =`
+        topScreenArea.textContent = `${n1} ${op} ${n2} =`;
+        setOperation(n1, op, n2, res);
+        appendOperationInHistory()
+        console.table(operationHistory);
         bottomScreenArea.textContent = res;
         shouldAddOperator = true;
         currentNumber = res;
@@ -165,7 +191,7 @@ function keyToOperatorId(key) {
 
 function keyPressed(e) {
     let button = null;
-    if(e.key >= 0 && e.key <= 9) {
+    if(e.key >= 0 && e.key <= 9 && e.code !== "Space") {
         button = document.getElementById(`${e.key}`);
         numberClicked(e.key);
     }
