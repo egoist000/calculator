@@ -150,7 +150,8 @@ function numberClicked(number) {
     }
 }
 
-function dotClicked() {
+function dotClicked(e) {
+    e.preventDefault();
     if(!currentNumber.includes(".")) {
         if(currentNumber === "") {
             currentNumber += "0.";
@@ -190,6 +191,7 @@ function keyToOperatorId(key) {
 }
 
 function keyPressed(e) {
+    e.preventDefault(); // Enter and spacebar keys causes click event to trigger on a focussed element
     let button = null;
     if(e.key >= 0 && e.key <= 9 && e.code !== "Space") {
         button = document.getElementById(`${e.key}`);
@@ -237,10 +239,12 @@ operations.forEach(op => {
 });
 
 numbers.forEach(n => {
-    n.addEventListener("click", () => {
-        numberClicked(n.textContent);
-    });
-    n.addEventListener("transitionend", removeTransition);
+    if(n.id !== "dot") {
+        n.addEventListener("click", () => {
+            numberClicked(n.textContent);
+        });
+        n.addEventListener("transitionend", removeTransition);
+    }
 });
 
 window.addEventListener("keydown", keyPressed);
