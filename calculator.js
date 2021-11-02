@@ -150,8 +150,7 @@ function numberClicked(number) {
     }
 }
 
-function dotClicked(e) {
-    e.preventDefault();
+function dotClicked() {
     if(!currentNumber.includes(".")) {
         if(currentNumber === "") {
             currentNumber += "0.";
